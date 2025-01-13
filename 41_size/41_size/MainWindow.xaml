@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_41_size"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow" Height="450" Width="800" FontFamily="Comic Sans MS" Icon="img/icon.ico">
+  <Grid ShowGridLines="True" Background="#FFFFCC99">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="75"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="30"/>
+    </Grid.RowDefinitions>
+    <Image Source="img/logo.png" HorizontalAlignment="Left"></Image>
+    <TextBlock Text="41 размер" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+    <Button Name="BtnBack" Content="Назад" HorizontalAlignment="Right" Click="BtnBack_Click"/>
+    
+    <Frame Grid.Row="1" Name="MainFrame" NavigationUIVisibility="Hidden" ContentRendered="MainFrame_ContentRendered"/>
+  </Grid>
 </Window>

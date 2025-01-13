@@ -1,4 +1,20 @@
-create database [Trade]
+
+CREATE DATABASE [Trade]
+ON PRIMARY (
+    NAME = KazychanovBD_Data,
+    FILENAME = 'D:\Под каблуком\KazychanovBD.mdf',
+    SIZE = 5MB,
+    MAXSIZE = 100MB,
+    FILEGROWTH = 10%
+)
+LOG ON (
+    NAME = KazychanovBD_Log,
+    FILENAME = 'D:\Под каблуком\KazychanovBD_log.ldf',
+    SIZE = 2MB,
+    MAXSIZE = 50MB,
+    FILEGROWTH = 5%
+);
+
 go
 use [Trade]
 go
