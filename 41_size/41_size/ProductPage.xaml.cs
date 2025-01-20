@@ -15,14 +15,13 @@ using System.Windows.Shapes;
 
 namespace _41_size
 {
-  /// <summary>
-  /// Логика взаимодействия для ProductPage.xaml
-  /// </summary>
   public partial class ProductPage : Page
   {
     public ProductPage()
     {
       InitializeComponent();
+      var currentProducts = Kazychanov_41Entities.GetContext().Product.ToList();
+      ProductListView.ItemsSource = currentProducts;
     }
 
     private void Button_Click(object sender, RoutedEventArgs e)

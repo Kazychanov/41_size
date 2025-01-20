@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="39d8808f51c24c118f4c17aa5ebc310e" Name="Diagram1">
+        <EntityTypeShape EntityType="Kazychanov_41Model.Order" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Kazychanov_41Model.OrderProduct" Width="1.5" PointX="8" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="Kazychanov_41Model.Product" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Kazychanov_41Model.PuckUpPoint" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Kazychanov_41Model.Role" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Kazychanov_41Model.User" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="Kazychanov_41Model.FK_Order_PuckUpPoint" ManuallyRouted="false" />
+        <AssociationConnector Association="Kazychanov_41Model.FK__OrderProd__Produ__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="Kazychanov_41Model.FK__User__UserRole__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="Kazychanov_41Model.FK_Order_User" />
+        <AssociationConnector Association="Kazychanov_41Model.FK_OrderProduct_Order" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
