@@ -36,8 +36,8 @@
         <TextBlock Text="Фильтрация по скидке" FontSize="20"/>
         <ComboBox Name="DiscountCB" Width="200" SelectionChanged="DiscountCB_SelectionChanged" FontSize="15">
           <TextBlock>Все</TextBlock>
-          <TextBlock>От 0 до 10%</TextBlock>
-          <TextBlock>От 10 до 15%</TextBlock>
+          <TextBlock>От 0 до 0,99%</TextBlock>
+          <TextBlock>От 10 до 14,99%</TextBlock>
           <TextBlock>От 15 до 100%</TextBlock>
         </ComboBox>
       </StackPanel>
