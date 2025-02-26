@@ -17,9 +17,35 @@ namespace _41_size
 {
   public partial class ProductPage : Page
   {
+
     public ProductPage()
     {
       InitializeComponent();
+
+      NSPTBlock.Text = "Вы вошли как Альберт";
+
+      var currentProducts = Kazychanov_41Entities.GetContext().Product.ToList();
+      ProductListView.ItemsSource = currentProducts;
+
+      DiscountCB.SelectedIndex = 0;
+      UpdateProduct();
+    }
+
+    public ProductPage(User user)
+    {
+      InitializeComponent();
+
+      NSPTBlock.Text = "Вы авторизованы как " + user.UserSurname + " " + user.UserName + " " + user.UserPatronymic;
+      switch (user.UserRole)
+      {
+        case 1:
+          RoleTBlock.Text = " Роль: Клиент"; break;
+        case 2:
+          RoleTBlock.Text = " Роль: Мененджер"; break;
+        case 3:
+          RoleTBlock.Text = " Роль: Администратор"; break;
+      }
+
       var currentProducts = Kazychanov_41Entities.GetContext().Product.ToList();
       ProductListView.ItemsSource = currentProducts;
 
