@@ -45,12 +45,12 @@
         </TextBlock.RenderTransform>
       </TextBlock>
       <TextBlock x:Name="captchaThirdWord" Text="3" FontSize="22" TextDecorations="Strikethrough" Margin="30,0,0,0"/>
-      <TextBlock x:Name="captchaFirthWord" Text="4" FontSize="22" TextDecorations="Strikethrough" Margin="0,10,0,0" RenderTransformOrigin="0.5,0.5">
+      <TextBlock x:Name="captchaFirthWord" Text="4" FontSize="22" TextDecorations="Underline" Margin="10,10,5,0" RenderTransformOrigin="0.5,0.5">
         <TextBlock.RenderTransform>
           <TransformGroup>
             <ScaleTransform/>
             <SkewTransform/>
-            <RotateTransform Angle="-241.344"/>
+            <RotateTransform Angle="-277"/>
             <TranslateTransform/>
           </TransformGroup>
         </TextBlock.RenderTransform>

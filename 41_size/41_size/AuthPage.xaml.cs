@@ -23,21 +23,27 @@ namespace _41_size
       InitializeComponent();
     }
 
-
-
-
+    private bool IsCaptchaShown = false;
+    private string CaptchaAnswer = "";
 
 
     private void GuestBtn_Click(object sender, RoutedEventArgs e)
     {
       Manager.MainFrame.Navigate(new ProductPage());
+      LoginTBox.Text = "";
+      PasswordTBox.Text = "";
+      CaptchaTBox.Text = "";
+      IsCaptchaShown = false;
+      CaptchaPanel.Visibility = Visibility.Collapsed;
     }
 
 
+    private void CaptchaShown()
+    {
 
+    }
+   
 
-    private bool IsCaptchaShown = false; // Флаг для проверки, показывается ли капча
-    private string CaptchaAnswer = "";   // Сохранённый ответ на капчу
 
     private async void RoleBtn_Click(object sender, RoutedEventArgs e)
     {
@@ -87,11 +93,9 @@ namespace _41_size
           ShowCaptcha();
           IsCaptchaShown = true;
           CaptchaPanel.Visibility = Visibility.Visible;
+          CaptchaTBox.Text = "";
         }
 
-        RoleBtn.IsEnabled = false;
-        await Task.Delay(10000); 
-        RoleBtn.IsEnabled = true;
       }
     }
 

@@ -117,5 +117,11 @@ namespace _41_size
       {
       UpdateProduct();
     }
+
+    private void MenuItem_Click(object sender, RoutedEventArgs e)
+    {
+      OrderWindow orderWindow = new OrderWindow(null, null, null);
+      orderWindow.ShowDialog();
+        }
     }
   }

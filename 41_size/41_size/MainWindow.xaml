@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_41_size"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000" FontFamily="Comic Sans MS" Icon="images/icon.ico">
+        Title="MainWindow" Height="600" Width="1200" FontFamily="Comic Sans MS" Icon="images/icon.ico">
   <Grid ShowGridLines="True" Background="#FFFFCC99">
     <Grid.RowDefinitions>
       <RowDefinition Height="75"/>

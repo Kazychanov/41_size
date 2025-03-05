@@ -53,6 +53,11 @@
     
     <!--Листвтью-->
     <ListView Name="ProductListView" Grid.Row="2">
+      <ListView.ContextMenu>
+        <ContextMenu>
+          <MenuItem Header="Добавить заказ" Click="MenuItem_Click" InputGestureText="Откроется отдельное окно" />
+        </ContextMenu>
+      </ListView.ContextMenu>
       <ListView.ItemTemplate>
         <DataTemplate>
           <Grid>
