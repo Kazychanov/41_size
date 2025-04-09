@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -17,12 +15,13 @@ namespace _41_size
 {
   public partial class ProductPage : Page
   {
+    List<Product> selectedProduct = new List<Product>();
 
     public ProductPage()
     {
       InitializeComponent();
 
-      NSPTBlock.Text = "Вы вошли как Альберт";
+      NSPTBlock.Text = "Вы вошли как гость";
 
       var currentProducts = Kazychanov_41Entities.GetContext().Product.ToList();
       ProductListView.ItemsSource = currentProducts;
@@ -41,7 +40,7 @@ namespace _41_size
         case 1:
           RoleTBlock.Text = " Роль: Клиент"; break;
         case 2:
-          RoleTBlock.Text = " Роль: Мененджер"; break;
+          RoleTBlock.Text = " Роль: Менеджер"; break;
         case 3:
           RoleTBlock.Text = " Роль: Администратор"; break;
       }
@@ -57,12 +56,10 @@ namespace _41_size
     {
       var currentProducts = Kazychanov_41Entities.GetContext().Product.ToList();
 
-      //поиск по имени
+      // Поиск по имени
       currentProducts = currentProducts.Where(x => x.ProductName.ToLower().Contains(SearchTB.Text.ToLower())).ToList();
-      ProductListView.ItemsSource = currentProducts.ToList();
 
-
-
+      // Фильтрация по скидке
       switch (DiscountCB.SelectedIndex)
       {
         case 1:
@@ -77,51 +74,89 @@ namespace _41_size
         default:
           break;
       }
-      ProductListView.ItemsSource = currentProducts;
 
-      //возрастание, убывание
+      // Сортировка по цене
       if (UpRB.IsChecked.Value)
       {
-        ProductListView.ItemsSource = currentProducts.OrderBy(x => x.ProductCost).ToList();
+        currentProducts = currentProducts.OrderBy(x => x.ProductCost).ToList();
       }
       if (DownRB.IsChecked.Value)
       {
-        ProductListView.ItemsSource = currentProducts.OrderByDescending(x => x.ProductCost).ToList();
+        currentProducts = currentProducts.OrderByDescending(x => x.ProductCost).ToList();
       }
 
-      //вывод количества продуктов в листвью из общего количества
-      NameCount.Text = "кол-во " + currentProducts.Count.ToString() + " из " + Kazychanov_41Entities.GetContext().Product.ToList().Count.ToString();
+      ProductListView.ItemsSource = currentProducts;
+
+      // Вывод количества продуктов в ListView из общего количества
+      NameCount.Text = "Количество: " + currentProducts.Count.ToString() + " из " + Kazychanov_41Entities.GetContext().Product.ToList().Count.ToString();
     }
 
-    private void Button_Click(object sender, RoutedEventArgs e)
-      {
-        Manager.MainFrame.Navigate(new AddEditPage());
-      }
-
-      private void DownRB_Checked(object sender, RoutedEventArgs e)
-      {
+    private void DownRB_Checked(object sender, RoutedEventArgs e)
+    {
       UpdateProduct();
     }
 
-      private void UpRB_Checked(object sender, RoutedEventArgs e)
-      {
+    private void UpRB_Checked(object sender, RoutedEventArgs e)
+    {
       UpdateProduct();
     }
 
-      private void DiscountCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
-      {
+    private void DiscountCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
       UpdateProduct();
     }
 
-      private void SearchTB_TextChanged(object sender, TextChangedEventArgs e)
-      {
+    private void SearchTB_TextChanged(object sender, TextChangedEventArgs e)
+    {
       UpdateProduct();
     }
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)
     {
-      OrderWindow orderWindow = new OrderWindow(null, null, null);
-      orderWindow.ShowDialog();
+      Product selectProduct = ProductListView.SelectedItem as Product;
+      if (selectProduct != null)
+      {
+        var existingProduct = selectedProduct.FirstOrDefault(p => p.ProductArticleNumber == selectProduct.ProductArticleNumber);
+        if (existingProduct != null)
+        {
+          existingProduct.Quantity++;
         }
+        else
+        {
+          selectProduct.Quantity = 1;
+          selectedProduct.Add(selectProduct);
+        }
+        BasketBtn.Visibility = Visibility.Visible;
+        MessageBox.Show("Товар добавлен к заказу");
+      }
+      UpdateProduct();
+    }
+
+    private void BasketBtn_Click(object sender, RoutedEventArgs e)
+    {
+      if (selectedProduct.Any())
+      {
+        var orderProducts = selectedProduct.Select(p => new OrderProduct
+        {
+          ProductArticleNumber = p.ProductArticleNumber,
+          ProductCount = p.Quantity
+        }).ToList();
+
+        // Генерация номера следующего заказа
+        int nextOrderNumber = Kazychanov_41Entities.GetContext().Order.Any() ?
+            Kazychanov_41Entities.GetContext().Order.Max(o => o.OrderID) + 1 : 1;
+
+        Window orderWindow = new OrderWindow(orderProducts, selectedProduct, NSPTBlock.Text, nextOrderNumber);
+        orderWindow.ShowDialog();
+
+        // Очистка корзины после оформления заказа
+        selectedProduct.Clear();
+        BasketBtn.Visibility = Visibility.Collapsed;
+      }
+      else
+      {
+        MessageBox.Show("Заказ пуст");
+      }
     }
   }
+}

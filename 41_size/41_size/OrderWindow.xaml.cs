@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,34 +22,51 @@ namespace _41_size
   {
     List<OrderProduct> SelectedOrderProducts = new List<OrderProduct>();
     List<Product> SelectedProducts = new List<Product>();
+    List<string> PuckUpName = new List<string>();
     private Order currentOrder = new Order();
     private OrderProduct currentOrderProduct = new OrderProduct();
-    public OrderWindow(List<OrderProduct> SelectedOrderProducts, List<Product> SelectedProducts, string NSPTblock)
+
+    public OrderWindow(List<OrderProduct> selectedOrderProducts, List<Product> selectedProducts, string NSPTblock, int nextOrderNumber)
     {
       InitializeComponent();
+
       PickUpCBox.SelectedIndex = 0;
       var currentPickUp = Kazychanov_41Entities.GetContext().PuckUpPoint.ToList();
-      PickUpCBox.ItemsSource = currentPickUp;
+
+      foreach (PuckUpPoint item in currentPickUp)
+      {
+        PuckUpName.Add(item.PupIndex + " " + item.PupCity + " " + item.PupStreet + " " + item.PupHome);
+      }
+      PickUpCBox.ItemsSource = PuckUpName;
 
       OrderClientTblock.Text = NSPTblock;
-      OrderNumberTBlock.Text = SelectedOrderProducts.First().OrderID.ToString();
 
-      OrderListView.ItemsSource = SelectedProducts;
-      
+      // Установка номера следующего заказа
+      OrderNumberTBlock.Text = "Номер заказа: " + nextOrderNumber.ToString();
+
+      // Установка списка заказанных товаров в ListView
+      OrderListView.ItemsSource = selectedProducts;
+
+
+      OrderDeliveryDate.Text = DateTime.Now.ToString();
+      SetDeliveryDate();
     }
 
     private void PickUpCBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-
+      // Логика обработки изменения выбора пункта выдачи
     }
+
     private void OrderSaveBtn_Click(object sender, RoutedEventArgs e)
     {
-
+      
     }
 
-    private void OrderDeleteBtn_Click(object sender, RoutedEventArgs e)
-    {
 
+    public void SetDeliveryDate()
+    {
+      bool allInStock = SelectedProducts.All(p => p.ProductQuantityInStock >= 3);
+      OrderDeliveryDate.SelectedDate = DateTime.Now.AddDays(allInStock ? 3 : 6);
     }
   }
 }

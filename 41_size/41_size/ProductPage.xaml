@@ -13,6 +13,7 @@
       <RowDefinition Height="auto"></RowDefinition>
       <RowDefinition Height="75"></RowDefinition>
       <RowDefinition Height="*"></RowDefinition>
+      <RowDefinition Height="auto"></RowDefinition>
     </Grid.RowDefinitions>
     
     <!--Роли и ФИО-->
@@ -55,7 +56,7 @@
     <ListView Name="ProductListView" Grid.Row="2">
       <ListView.ContextMenu>
         <ContextMenu>
-          <MenuItem Header="Добавить заказ" Click="MenuItem_Click" InputGestureText="Откроется отдельное окно" />
+          <MenuItem Header="Добавить заказ" Click="MenuItem_Click"/>
         </ContextMenu>
       </ListView.ContextMenu>
       <ListView.ItemTemplate>
@@ -96,5 +97,6 @@
         </DataTemplate>
       </ListView.ItemTemplate>
     </ListView>
+    <Button Name="BasketBtn" Content="Корзина" Click="BasketBtn_Click" Grid.Row="4" Visibility="Collapsed"/>
   </Grid>
 </Page>

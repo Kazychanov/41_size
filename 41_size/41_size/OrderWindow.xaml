@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_41_size"
         mc:Ignorable="d"
-        Title="Меню заказа" Height="450" Width="800">
-    <Grid>
+        Title="Меню заказа" WindowState="Normal">
+  <Grid>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition/>
+      <ColumnDefinition Width="*"/>
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
       <RowDefinition Height="auto"/>
@@ -16,45 +16,65 @@
       <RowDefinition Height="auto"/>
       <RowDefinition Height="auto"/>
     </Grid.RowDefinitions>
-      
-      <!--ДАТА ДОСТАВКИ, ФИО, НОМЕР-->
+
+    <!--ДАТА ДОСТАВКИ, ФИО, НОМЕР-->
     <StackPanel Orientation="Vertical" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0">
       <TextBlock Text="Дата формирования заказа" Margin="5" FontSize="20"/>
-      <TextBlock Text="Дата доставки заказа" Margin="5" FontSize="20"/>
       <TextBlock Name="OrderClientTblock" Text="ФИО клиента" Margin="5" FontSize="20"/>
       <TextBlock Name="OrderNumberTBlock"  Text="Номер заказа" Margin="5" FontSize="20"/>
     </StackPanel>
-      
-      <!--ЛИСТЬЮ-->
 
-    <ListView Name="OrderListView">
+    <!--ВЫБОР ДАТЫ-->
+    <StackPanel Orientation="Vertical" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0">
+      <DatePicker Name="OrderFormDate" FontSize="20" Margin="5" Width="150"/>
+      <DatePicker Name="OrderDeliveryDate" FontSize="20" Margin="5" Width="150"/>
+    </StackPanel>
+
+    <!--ЛИСТЬЮ-->
+    <ListView Name="OrderListView" Grid.Row="1">
       <ListView.ItemTemplate>
         <DataTemplate>
-          <StackPanel Orientation="Horizontal">
-            <Image Source="{Binding Product.ProductPhoto}" Width="50"/>
-            <TextBlock Text="{Binding Product.ProductName}" Width="200"/>
-            <TextBox Text="{Binding Amount}" Width="50"/>
-            <Button Name="OrderDeleteBtn" Content="Удалить" Click="OrderDeleteBtn_Click"/>
-          </StackPanel>
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="150"/>
+              <ColumnDefinition Width="500"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="auto"/>
+              <RowDefinition Height="auto"/>
+              <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Image Grid.RowSpan="3" Grid.Column="0">
+              <Image.Source>
+                <Binding Path="ProductPhoto1" >
+                  <Binding.TargetNullValue>
+                    <ImageSource>
+                      /images/picture.png
+                    </ImageSource>
+                  </Binding.TargetNullValue>
+                </Binding>
+              </Image.Source>
+            </Image>
+            <TextBlock Text="{Binding ProductName}" FontSize="20" FontWeight="Black" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1"></TextBlock>
+            <TextBlock Text="{Binding ProductManufacturer, StringFormat= производитель: {0}}" FontSize="20" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1"></TextBlock>
+            <TextBlock Text="{Binding ProductCost, StringFormat=Цена: {0} руб}" FontSize="20" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1"></TextBlock>
+          </Grid>
         </DataTemplate>
       </ListView.ItemTemplate>
     </ListView>
 
     <!--ПУНКТ ВЫДАЧИ-->
-
     <TextBlock Text="Пункт выдачи" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20" Grid.Row="2"/>
     <ComboBox Name="PickUpCBox" SelectionChanged="PickUpCBox_SelectionChanged" Margin="5" Height="30" 
-              VerticalAlignment="Center" HorizontalAlignment="Right" Width="600" Grid.Row="2"
-              SelectedValuePath="">
-      
+                  VerticalAlignment="Center" HorizontalAlignment="Right" Width="600" Grid.Row="2"
+                  SelectedValuePath="">
     </ComboBox>
 
     <!--КНОПКА-->
-    <StackPanel Grid.Row="3">
-      <TextBlock Name="TotalSumText" FontSize="20"/>
-      <TextBlock Name="DiscountText" FontSize="20"/>
-      <Button Name="OrderSaveBtn" Content="Сохранить заказ" Click="OrderSaveBtn_Click"/>
+    <StackPanel Grid.Row="3" Orientation="Horizontal">
+      <TextBlock Name="TotalSumText" Text="Сумма:" Margin="10" FontSize="20"/>
+      <TextBlock Name="DiscountText" Text="Скидка:" Margin="10" FontSize="20"/>
     </StackPanel>
-
+    <Button Name="OrderSaveBtn" Content="Сохранить заказ" Click="OrderSaveBtn_Click" Grid.Row="3" HorizontalAlignment="Right" Margin="10"/>
   </Grid>
 </Window>
